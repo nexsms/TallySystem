@@ -98,22 +98,24 @@ class Voter(Base):
 
     id = Column(String, primary_key=True, index=True)  # National ID
     tenant_id = Column(String, ForeignKey("tenants.id"), nullable=False)
-    first_name = Column(String)
-    middle_name = Column(String)
-    last_name = Column(String)
-    phone_number = Column(String)
 
-    county_id = Column(String, ForeignKey("counties.id"))
-    constituency_id = Column(String, ForeignKey("constituencies.id"))
-    ward_id = Column(String, ForeignKey("wards.id"))
+    id_number = Column(String, unique=True, nullable=False)
+    first_name = Column(String, nullable=False)
+    middle_name = Column(String, nullable=True)
+    last_name = Column(String, nullable=False)
+    phone_number = Column(String, nullable=True)
 
-    polling_station_code = Column(String)
-    polling_station_name = Column(String)
+    county_code = Column(String, nullable=True)
+    county_name = Column(String, nullable=True)
+    constituency_code = Column(String, nullable=True)
+    constituency_name = Column(String, nullable=True)
+    ward_code = Column(String, nullable=True)
+    ward_name = Column(String, nullable=True)
+    polling_station_code = Column(String, nullable=True)
+    polling_station_name = Column(String, nullable=True)
 
     tenant = relationship("Tenant", back_populates="voters")
-    county = relationship("County")
-    constituency = relationship("Constituency")
-    ward = relationship("Ward")
+    ward = relationship("Ward", back_populates="voters")
 
 
 # ============================================================
