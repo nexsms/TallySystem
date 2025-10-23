@@ -109,3 +109,33 @@ class DashboardStats(BaseModel):
     pending_tallies: int
     average_turnout: float
     top_constituencies: list
+
+
+# Voter Schemas
+class VoterBase(BaseModel):
+    first_name: str
+    last_name: str
+    phone_number: Optional[str] = None
+    ward_code: int
+    ward_name: Optional[str] = None
+    polling_station_name: Optional[str] = None
+
+
+class VoterCreate(VoterBase):
+    pass
+
+
+class VoterResponse(VoterBase):
+    id: str
+    tenant_id: str
+    middle_name: Optional[str] = None
+    county_code: Optional[int] = None
+    county_name: Optional[str] = None
+    constituency_code: Optional[int] = None
+    constituency_name: Optional[str] = None
+    polling_station_code: Optional[str] = None
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        from_attributes = True

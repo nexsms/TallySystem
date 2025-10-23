@@ -6,32 +6,14 @@ from datetime import timedelta
 import uvicorn
 
 from database import engine, get_db, Base
-from routers import auth, tallies, users, dashboard
-from config import settings
+from routers import auth, users, dashboard, voters
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
+...
 
-app = FastAPI(
-    title="Campaign Tally System API",
-    description="Backend API for Hon. Philip Aroko 2025 Campaign Management",
-    version="1.0.0"
-)
-
-# CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
-app.include_router(tallies.router, prefix="/api/tallies", tags=["Tallies"])
 app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
+app.include_router(voters.router, prefix="/api/voters", tags=["Voters"])
 
 @app.get("/")
 async def root():
