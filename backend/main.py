@@ -8,7 +8,19 @@ import uvicorn
 from database import engine, get_db, Base
 from routers import auth, users, dashboard, voters
 
+# ✅ Creates the FastAPI app instance first
+app = FastAPI(title="Campaign Tally System API", version="1.0.0")
+
 ...
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # frontend URL in production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
